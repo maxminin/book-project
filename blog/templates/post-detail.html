@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>My Post</h3>
+<p>{{ post.title }}</p>
+<p>{{ post.text }}</p>
+<h3>Comments</h3>
+{% for comment in comments %}
+<p>{{ comment.text }}</p>
+{%endfor%}
+<h2>Add Comment</h2>
+<form method="post" action="{% url 'post_detail' post.pk %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Comment</button>
+</form>
+<a href="{% url 'post_list' %}">Back to main</a>
+</body>
+</html>
