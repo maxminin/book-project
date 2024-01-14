@@ -11,7 +11,7 @@
 <h3>Comments</h3>
 {% for comment in comments %}
 <p>{{ comment.text }}</p>
-{%endfor%}
+{% endfor %}
 <h2>Add Comment</h2>
 <form method="post" action="{% url 'post_detail' post.pk %}">
     {% csrf_token %}

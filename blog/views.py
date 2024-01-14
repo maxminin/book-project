@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Post, Comment
+from .models import Post
 from .forms import AddPostForm, CommentForm
 from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
@@ -25,7 +25,7 @@ def post_detail(request, pk):
     return render(request,
                   'post-detail.html',
                   {'post' : post,
-                   'comments':comments,
+                   'comments': comments,
                    'form': form})
 @csrf_exempt
 def post_create(request):
@@ -35,10 +35,21 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
             post.save()
+            return redirect('post_list')
     else:
         form = AddPostForm()
     return render (request,
             'post-create.html',
             {'form': form})
+def post_delete(request, pk):
+    post = Post.objects.get(id=pk)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('post_list')
+    return render(request,
+                  'post_delete.html',
+                  {'post' : post})
+
+
 
 
